@@ -1,0 +1,58 @@
+# --------------------
+# OS / Editor noise
+# --------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --------------------
+# Secrets / env files
+# --------------------
+.env
+.env.*
+docker/.env
+
+# Keys and credentials
+*.key
+*.pem
+*.crt
+*.p12
+*.ovpn
+wg0.conf
+wireguard.conf
+
+# --------------------
+# Logs / runtime files
+# --------------------
+*.log
+*.tmp
+
+# --------------------
+# Archives / artifacts
+# --------------------
+*.zip
+*.tar.gz
+
+# --------------------
+# Kubernetes local state
+# --------------------
+.kube/
+*.kubeconfig
+
+# --------------------
+# CI / tooling artifacts
+# --------------------
+coverage/
+reports/
+tmp/
+
+# --------------------
+# Shell / script byproducts
+# --------------------
+nohup.out
