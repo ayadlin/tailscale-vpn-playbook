@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tailscale-subnet-router
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tailscale-subnet-router
+  template:
+    metadata:
+      labels:
+        app: tailscale-subnet-router
+    spec:
+      hostNetwork: true
+      containers:
+        - name: tailscale
+          image: tailscale/tailscale:latest
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["NET_ADMIN", "SYS_MODULE"]
+          env:
+            - name: TS_AUTHKEY
+              valueFrom:
+                secretKeyRef:
+                  name: tailscale-auth
+                  key: TS_AUTHKEY
+            - name: TS_HOSTNAME
+              value: "k8s-subnet-router"
+            # Routes to advertise into Tailscale (edit these)
+            - name: ROUTES
+              value: "192.168.1.0/24"
+          command: ["/bin/sh","-lc"]
+          args:
+            - |
+              tailscaled &
+              sleep 2
+              # Authenticate + advertise subnet routes
+              tailscale up --authkey="$TS_AUTHKEY" --hostname="$TS_HOSTNAME" --advertise-routes="$ROUTES" --accept-dns=false
+              tail -f /dev/null
+          volumeMounts:
+            - name: tun
+              mountPath: /dev/net/tun
+      volumes:
+        - name: tun
+          hostPath:
+            path: /dev/net/tun
+            type: CharDevice

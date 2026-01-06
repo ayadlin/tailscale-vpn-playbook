@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tailscale-exit-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tailscale-exit-node
+  template:
+    metadata:
+      labels:
+        app: tailscale-exit-node
+    spec:
+      hostNetwork: true
+      containers:
+        - name: tailscale
+          image: tailscale/tailscale:latest
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["NET_ADMIN", "SYS_MODULE"]
+          env:
+            - name: TS_AUTHKEY
+              valueFrom:
+                secretKeyRef:
+                  name: tailscale-auth
+                  key: TS_AUTHKEY
+            - name: TS_HOSTNAME
+              value: "k8s-exit-node"
+          volumeMounts:
+            - name: tun
+              mountPath: /dev/net/tun
+          args: ["tailscaled"]
+      volumes:
+        - name: tun
+          hostPath:
+            path: /dev/net/tun
+            type: CharDevice

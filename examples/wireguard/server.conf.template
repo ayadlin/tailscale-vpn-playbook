@@ -1,0 +1,16 @@
+# WireGuard Server Template
+# Replace ALL <...> placeholders.
+
+[Interface]
+Address = <SERVER_TUNNEL_IP>/24
+ListenPort = 51820
+PrivateKey = <SERVER_PRIVATE_KEY>
+
+# Enable NAT (example using iptables):
+# PostUp   = iptables -t nat -A POSTROUTING -o <WAN_IF> -j MASQUERADE
+# PostDown = iptables -t nat -D POSTROUTING -o <WAN_IF> -j MASQUERADE
+
+# Client peer example:
+#[Peer]
+#PublicKey = <CLIENT_PUBLIC_KEY>
+#AllowedIPs = <CLIENT_TUNNEL_IP>/32

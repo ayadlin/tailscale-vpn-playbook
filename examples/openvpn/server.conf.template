@@ -1,0 +1,24 @@
+# OpenVPN minimal server template (UDP)
+# Replace placeholders and review for production.
+
+port 1194
+proto udp
+dev tun
+
+ca <PATH_TO_CA_CRT>
+cert <PATH_TO_SERVER_CRT>
+key <PATH_TO_SERVER_KEY>
+dh <PATH_TO_DH_PEM>
+
+server 10.8.0.0 255.255.255.0
+push "redirect-gateway def1 bypass-dhcp"
+push "dhcp-option DNS 1.1.1.1"
+
+keepalive 10 120
+persist-key
+persist-tun
+
+user nobody
+group nogroup
+
+verb 3

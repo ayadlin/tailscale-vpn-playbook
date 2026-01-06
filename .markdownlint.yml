@@ -1,0 +1,10 @@
+default: true
+
+# Allow long lines in code blocks and docs; keep content readable.
+MD013:
+  line_length: 140
+  code_blocks: false
+  tables: false
+
+# Allow inline HTML occasionally (badges, etc.)
+MD033: false

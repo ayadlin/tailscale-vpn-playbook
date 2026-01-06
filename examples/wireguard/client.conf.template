@@ -1,0 +1,13 @@
+# WireGuard Client Template (Level 1 side-by-side)
+# Replace ALL <...> placeholders.
+
+[Interface]
+PrivateKey = <CLIENT_PRIVATE_KEY>
+Address = <CLIENT_TUNNEL_IP>/32
+DNS = <DNS_IP_OR_LEAVE_BLANK>
+
+[Peer]
+PublicKey = <SERVER_PUBLIC_KEY>
+Endpoint = <VPN_HOST_OR_IP>:51820
+AllowedIPs = 0.0.0.0/0
+PersistentKeepalive = 25

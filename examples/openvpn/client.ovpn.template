@@ -1,0 +1,20 @@
+# OpenVPN minimal client template
+client
+dev tun
+proto udp
+remote <VPN_HOST_OR_IP> 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+verb 3
+
+<ca>
+# paste CA cert here
+</ca>
+<cert>
+# paste client cert here
+</cert>
+<key>
+# paste client key here
+</key>
